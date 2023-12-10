@@ -2,7 +2,7 @@ import {
   useQuery,
   useMutation,
   useQueryClient,
-  useInfiniteQuery,
+  // useInfiniteQuery,
 } from "@tanstack/react-query";
 import {
   createPost,

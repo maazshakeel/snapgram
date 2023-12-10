@@ -7,7 +7,7 @@ const Home = () => {
   const {
     data: posts,
     isPending: isPostLoading,
-    isError: isErrorPosts,
+    // isError: isErrorPosts,
   } = useGetRecentPosts();
   return (
     <div className="flex flex-1">
@@ -18,7 +18,7 @@ const Home = () => {
             <Loader />
           ) : (
             <ul className="flex flex-col flex-1 gap-9 w-full">
-              {posts?.documents.map((post: Models.Document, index) => (
+              {posts?.documents.map((post: Models.Document) => (
                 <PostCard key={post.$id} post={post} />
               ))}
             </ul>
