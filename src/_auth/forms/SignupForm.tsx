@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
-import { useToast } from "@/components/ui/use-toast";
+import { toast, useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -25,7 +25,6 @@ import {
 import { useUserContext } from "@/context/AuthContext";
 
 const SignupForm = () => {
-  const { toast } = useToast();
   const { checkAuthUser, isLoading: isUserLoading } = useUserContext();
 
   const navigate = useNavigate();
@@ -49,12 +48,17 @@ const SignupForm = () => {
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof SignupValidation>) {
+    toast({
+      title: "loading....",
+      variant: "destructive",
+    });
     const newUser = await createUserAccount(values);
 
     if (!newUser) {
-      return toast({
+      toast({
         title: "Sign up failed. Please try again.",
       });
+      return;
     }
 
     const session = await signInAccount({
@@ -63,9 +67,10 @@ const SignupForm = () => {
     });
 
     if (!session) {
-      return toast({
+      toast({
         title: "Sign in failed. Please try again.",
       });
+      return;
     }
 
     const isLoggedIn = await checkAuthUser();
@@ -74,9 +79,10 @@ const SignupForm = () => {
       form.reset();
       navigate("/");
     } else {
-      return toast({
+      toast({
         title: "Sign up failed. Please try again.",
       });
+      return;
     }
   }
   return (
