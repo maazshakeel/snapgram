@@ -27,7 +27,8 @@ const SigninForm = () => {
 
   const navigate = useNavigate();
 
-  const { mutateAsync: signInAccount } = useSignInAccount();
+  const { mutateAsync: signInAccount, isPending: isSigningIn } =
+    useSignInAccount();
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof SigninValidation>>({
@@ -48,6 +49,7 @@ const SigninForm = () => {
     if (!session) {
       return toast({
         title: "Sign in failed. Please try again.",
+        variant: "destructive",
       });
     }
 
@@ -58,7 +60,8 @@ const SigninForm = () => {
       navigate("/");
     } else {
       return toast({
-        title: "Sign up failed. Please try again.",
+        title: "Sign in failed. Please try again.",
+        variant: "destructive",
       });
     }
   }
@@ -102,8 +105,11 @@ const SigninForm = () => {
               </FormItem>
             )}
           />
-          <Button type="submit" className="shad-button_primary">
-            {isUserLoading ? (
+          <Button
+            type="submit"
+            className="shad-button_primary"
+            disabled={isUserLoading || isSigningIn}>
+            {isUserLoading || isSigningIn ? (
               <div className="flex center gap-2">
                 <Loader /> Loading...
               </div>

@@ -8,7 +8,11 @@ import { INavLink } from "@/types";
 
 const LeftSidebar = () => {
   const { pathname } = useLocation();
-  const { mutate: signOut, isSuccess } = useSignOutAccount();
+  const {
+    mutate: signOut,
+    isSuccess,
+    isPending: isSigningOut,
+  } = useSignOutAccount();
   const navigate = useNavigate();
 
   const { user } = useUserContext();
@@ -68,6 +72,7 @@ const LeftSidebar = () => {
       </div>
 
       <Button
+        disabled={isSigningOut}
         onClick={() => signOut()}
         variant={"ghost"}
         className="shad-button_ghost">
