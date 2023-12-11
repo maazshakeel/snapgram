@@ -307,8 +307,8 @@ export async function updatePost(post: IUpdatePost) {
   }
 }
 
-export async function deletePost(postId: string, imageId: string) {
-  if (!postId || !imageId) throw Error;
+export async function deletePost(postId?: string, imageId?: string) {
+  if (!postId || !imageId) return;
 
   try {
     const statusCode = await databases.deleteDocument(
@@ -316,10 +316,30 @@ export async function deletePost(postId: string, imageId: string) {
       appwriteConfig.postCollectionId,
       postId
     );
+
     if (!statusCode) throw Error;
 
     await deleteFile(imageId);
-    return { status: "ok" };
+
+    return { status: "Ok" };
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function getUserPosts(userId?: string) {
+  if (!userId) return;
+
+  try {
+    const post = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.postCollectionId,
+      [Query.equal("creator", userId), Query.orderDesc("$createdAt")]
+    );
+
+    if (!post) throw Error;
+
+    return post;
   } catch (error) {
     console.log(error);
   }
