@@ -217,9 +217,19 @@
     @apply absolute bottom-0 p-5 flex-between w-full bg-gradient-to-t from-dark-3 to-transparent rounded-b-[24px] gap-2;
   }
 
+  /* Right Sidebar*/
+
+  .rightsidebar {
+    @apply hidden lg:flex px-6 py-10 flex-col overflow-y-scroll items-center justify-start min-w-[290px] bg-dark-2;
+  }
+
+  .rightsidebar-link {
+    @apply rounded-lg base-medium hover:bg-primary-500 transition;
+  }
+
   /* Left sidebar */
   .leftsidebar {
-    @apply hidden md:flex px-6 py-10 flex-col justify-between min-w-[270px] bg-dark-2;
+    @apply hidden md:flex px-6 py-10 flex-col justify-between md:min-w-[225px] xl:min-w-[270px] bg-dark-2;
   }
 
   .leftsidebar-link {
@@ -278,4 +288,3 @@
     @apply flex gap-4 items-center justify-start hover:bg-transparent hover:text-white !important;
   }
 }
-
