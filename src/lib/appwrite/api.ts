@@ -381,3 +381,14 @@ export async function searchPosts(searchTerm: string) {
     console.log(error);
   }
 }
+
+export async function getTopCreators() {
+  const posts = await databases.listDocuments(
+    appwriteConfig.databaseId,
+    appwriteConfig.userCollectionId,
+    [Query.orderDesc("$createdAt"), Query.limit(20)]
+  );
+
+  if (!posts) throw Error;
+  return posts;
+}
